@@ -16,15 +16,14 @@ class ExampleManager(IExampleManager):
             target=self._working_thread_handle, daemon=True)
 
     def start(self) -> None:
-        # self._event_bus.send_counter_signal.connect(
-        #     self._send_counter_signal_slot)
-        # self._working_thread.start()
-        pass
+        self._event_bus.send_coordinates_signal.connect(
+             self._send_coordinates_signal_slot)
+        self._working_thread.start()
+        
 
     def _working_thread_handle(self) -> None:
         while True:
             time.sleep(Consts.WORKING_LOOP_DELAY)
 
-    def _send_counter_signal_slot(self, count: int) -> None:
-        #self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"sent counter {count}")
-        pass
+    def _send_coordinates_signal_slot(self, x: int, y: int) -> None:
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video clicked at X={x}, Y={y}")
