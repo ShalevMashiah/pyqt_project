@@ -39,9 +39,14 @@ class MainWindow(QMainWindow):
         # Video display
         self._video_label.setMinimumSize(640, 360)
         self._video_label.setStyleSheet("background-color: black;")
-        #self._video_label.clicked.connect(self._on_video_clicked)
+        self._video_label.clicked.connect(self._on_video_clicked)
         main_layout.addWidget(self._video_label)
 
+        # Coordinates Display
+        self._coordinates_label.setObjectName("CoordinatesLabel")
+        self._coordinates_label.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(self._coordinates_label)
+        
         # 3. Title Section
         # title_label = QLabel("CURRENT COUNT")
         # title_label.setObjectName("TitleLabel")
@@ -54,17 +59,22 @@ class MainWindow(QMainWindow):
         # main_layout.addWidget(self._count_label)
 
         # Spacer to push buttons to bottom slightly
-        main_layout.addStretch()
+
+
 
         # 5. Controls Section (Horizontal Layout)
         button_layout = QHBoxLayout()
         button_layout.setSpacing(15)
+
+
+        main_layout.addStretch()
 
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
 
     def _register_signals_from_vm(self):
+        self._view_model.coordinates_changed_signal.connect(self._update_coordinates_slot)
         self._view_model.frame_ready_signal.connect(self._display_frame)
 
     def _load_video(self):
@@ -86,20 +96,11 @@ class MainWindow(QMainWindow):
         q_image = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format_RGB888)
         self._video_label.setPixmap(QPixmap.fromImage(q_image))
 
-        
-    @pyqtSlot(int)
-    def _update_view_slot(self, count: int) -> None:
-        pass
-        #self._count_label.setText(str(count))
+    def _on_video_clicked(self, x: int, y: int):
+        self._view_model.update_coordinates_slot(x, y)
 
-        # Visual Logic: Set a dynamic property for color coding based on value
-        # status = "zero"
-        # if count > 0:
-        #     status = "positive"
-        # elif count < 0:
-        #     status = "negative"
-        # self._count_label.setProperty("valueStatus", status)
+    def _update_coordinates_slot(self, x: int, y: int) -> None:
+        self._coordinates_label.setText(f"Click on video: X={x}, Y={y}")       
 
-        # Re-polish the widget to apply the new style from the stylesheet
-        # self._count_label.style().unpolish(self._count_label)
-        # self._count_label.style().polish(self._count_label)
+
+

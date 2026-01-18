@@ -64,6 +64,15 @@ class MainWindowViewModel(QObject):
         
         self.frame_ready_signal.emit(frame_rgb)
 
+    @pyqtSlot(int, int)
+    def update_coordinates_slot(self, x: int, y: int) -> None:
+        self._current_x = x
+        self._current_y = y
+        self._current_click_point = (x, y)
+        self.coordinates_changed_signal.emit(x, y)
+        self._event_bus.send_coordinates_signal.emit(x, y)
+
+        
     @pyqtSlot()
     def increment_slot(self) -> None:
         # self._counter_data.increment()
