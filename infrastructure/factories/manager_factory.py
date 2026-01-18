@@ -11,6 +11,6 @@ class ManagerFactory:
             ConstStrings.GLOBAL_CONFIG_PATH)
         return ExampleManager(config_manager)
 
-    @staticmethodr
+    @staticmethod
     def create_all() -> None:
         ManagerFactory.create_example_manager().start()

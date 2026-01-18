@@ -26,15 +26,15 @@ class MainWindow(QMainWindow):
         main_layout.setContentsMargins(40, 40, 40, 40)
 
         # 3. Title Section
-        title_label = QLabel("CURRENT COUNT")
-        title_label.setObjectName("TitleLabel")
-        title_label.setAlignment(Qt.AlignCenter)
-        main_layout.addWidget(title_label)
+        # title_label = QLabel("CURRENT COUNT")
+        # title_label.setObjectName("TitleLabel")
+        # title_label.setAlignment(Qt.AlignCenter)
+        # main_layout.addWidget(title_label)
 
         # 4. Count Display Section
-        self._count_label.setObjectName("CountLabel")
-        self._count_label.setAlignment(Qt.AlignCenter)
-        main_layout.addWidget(self._count_label)
+        # self._count_label.setObjectName("CountLabel")
+        # self._count_label.setAlignment(Qt.AlignCenter)
+        # main_layout.addWidget(self._count_label)
 
         # Spacer to push buttons to bottom slightly
         main_layout.addStretch()
@@ -44,27 +44,27 @@ class MainWindow(QMainWindow):
         button_layout.setSpacing(15)
 
         # Decrement Button
-        btn_dec = QPushButton("-")
-        btn_dec.setObjectName("DecButton")
-        btn_dec.setCursor(Qt.PointingHandCursor)
-        btn_dec.clicked.connect(self._view_model.decrement_slot)
-        button_layout.addWidget(btn_dec)
+        # btn_dec = QPushButton("-")
+        # btn_dec.setObjectName("DecButton")
+        # btn_dec.setCursor(Qt.PointingHandCursor)
+        # btn_dec.clicked.connect(self._view_model.decrement_slot)
+        # button_layout.addWidget(btn_dec)
 
         # Reset Button
-        btn_reset = QPushButton("Reset")
-        btn_reset.setCursor(Qt.PointingHandCursor)
-        btn_reset.clicked.connect(self._view_model.reset_slot)
-        button_layout.addWidget(btn_reset)
+        # btn_reset = QPushButton("Reset")
+        # btn_reset.setCursor(Qt.PointingHandCursor)
+        # btn_reset.clicked.connect(self._view_model.reset_slot)
+        # button_layout.addWidget(btn_reset)
 
         # Increment Button
-        btn_inc = QPushButton("+")
-        btn_inc.setObjectName("IncButton")
-        btn_inc.setCursor(Qt.PointingHandCursor)
-        btn_inc.clicked.connect(self._view_model.increment_slot)
-        button_layout.addWidget(btn_inc)
+        # btn_inc = QPushButton("+")
+        # btn_inc.setObjectName("IncButton")
+        # btn_inc.setCursor(Qt.PointingHandCursor)
+        # btn_inc.clicked.connect(self._view_model.increment_slot)
+        # button_layout.addWidget(btn_inc)
 
         # Add control layout to main layout
-        main_layout.addLayout(button_layout)
+        # main_layout.addLayout(button_layout)
 
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
@@ -75,16 +75,17 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(int)
     def _update_view_slot(self, count: int) -> None:
-        self._count_label.setText(str(count))
+        pass
+        #self._count_label.setText(str(count))
 
         # Visual Logic: Set a dynamic property for color coding based on value
-        status = "zero"
-        if count > 0:
-            status = "positive"
-        elif count < 0:
-            status = "negative"
-        self._count_label.setProperty("valueStatus", status)
+        # status = "zero"
+        # if count > 0:
+        #     status = "positive"
+        # elif count < 0:
+        #     status = "negative"
+        # self._count_label.setProperty("valueStatus", status)
 
         # Re-polish the widget to apply the new style from the stylesheet
-        self._count_label.style().unpolish(self._count_label)
-        self._count_label.style().polish(self._count_label)
+        # self._count_label.style().unpolish(self._count_label)
+        # self._count_label.style().polish(self._count_label)
