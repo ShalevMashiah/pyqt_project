@@ -11,6 +11,7 @@ class MainWindowViewModel(QObject):
     # Signals to view
     coordinates_changed_signal = pyqtSignal(int, int)
     frame_ready_signal = pyqtSignal(object)
+    status_message_signal = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -80,9 +81,13 @@ class MainWindowViewModel(QObject):
 
 
     def clear_point(self):
-        """Clear the current click point"""
-        self._current_click_point = None
-        self._logger.log(ConstStrings.LOG_NAME_DEBUG, "Point cleared")
+        if self._current_click_point is None:
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, "No point to clear")
+            self.status_message_signal.emit("No point to clear")
+        else:
+            self._current_click_point = None
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, "Point cleared")
+            self.status_message_signal.emit("Point cleared")
 
     
     def increment_slot(self) -> None:

@@ -87,6 +87,8 @@ class MainWindow(QMainWindow):
     def _register_signals_from_vm(self):
         self._view_model.coordinates_changed_signal.connect(self._update_coordinates_slot)
         self._view_model.frame_ready_signal.connect(self._display_frame)
+        self._view_model.status_message_signal.connect(self._display_status_message)
+        self._view_model.status_message_signal.connect(self._display_status_message)
 
     def _load_video(self):
         if self._view_model.load_default_video():
@@ -113,6 +115,9 @@ class MainWindow(QMainWindow):
     def _update_coordinates_slot(self, x: int, y: int) -> None:
         self._coordinates_label.setText(f"Click on video: X={x}, Y={y}")    
 
+    @pyqtSlot(str)
+    def _display_status_message(self, message: str) -> None:
+        self._coordinates_label.setText(message)
 
     def _toggle_video(self):
         is_playing = self._view_model.toggle_playback()
