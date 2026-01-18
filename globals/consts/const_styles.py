@@ -23,6 +23,14 @@ class ConstStyles:
             QLabel#CountLabel[valueStatus="zero"] {
                 color: #333333; /* Dark Grey */
             }
+            QLabel#CoordinatesLabel {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2563eb; /* Blue */
+                padding: 10px;
+                background-color: #dbeafe;
+                border-radius: 5px;
+            }
             QPushButton {
                 background-color: #ffffff;
                 border: 1px solid #d1d5db;
