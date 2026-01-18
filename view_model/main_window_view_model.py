@@ -77,8 +77,12 @@ class MainWindowViewModel(QObject):
         state_text = "playing" if self._is_playing else "paused"
         self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video {state_text}")
         return self._is_playing       
-    @pyqtSlot()
 
+
+    def clear_point(self):
+        """Clear the current click point"""
+        self._current_click_point = None
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, "Point cleared")
 
     
     def increment_slot(self) -> None:

@@ -73,7 +73,11 @@ class MainWindow(QMainWindow):
         button_layout.addWidget(btn_play)
 
 
-        
+        # Clear Points Button
+        btn_clear = QPushButton("Clear Points")
+        btn_clear.setCursor(Qt.PointingHandCursor)
+        btn_clear.clicked.connect(self._clear_points)
+        button_layout.addWidget(btn_clear)
         main_layout.addLayout(button_layout)
 
         central_widget = QWidget()
@@ -114,3 +118,5 @@ class MainWindow(QMainWindow):
         is_playing = self._view_model.toggle_playback()
 
 
+    def _clear_points(self):
+        self._view_model.clear_point()
