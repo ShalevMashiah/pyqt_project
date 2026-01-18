@@ -16,14 +16,20 @@ class MainWindow(QMainWindow):
 
     def _init_ui(self):
         # 1. Window Setup
-        self.setWindowTitle('Modern Counter')
-        self.setMinimumSize(400, 300)
+        self.setWindowTitle('Video Display X Y Coordinates')
+        self.setMinimumSize(800, 600)
         self.setStyleSheet(ConstStyles.MAIN_WINDOW_STYLE)
 
         # 2. Main Layout
         main_layout = QVBoxLayout()
         main_layout.setSpacing(20)
         main_layout.setContentsMargins(40, 40, 40, 40)
+
+        #Video title Section
+        video_title = QLabel("Click on Video to get X Y Coordinates")
+        video_title.setObjectName("TitleLabel")
+        video_title.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(video_title)
 
         # 3. Title Section
         # title_label = QLabel("CURRENT COUNT")
