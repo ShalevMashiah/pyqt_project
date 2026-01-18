@@ -90,27 +90,4 @@ class MainWindowViewModel(QObject):
             self.status_message_signal.emit("Point cleared")
 
     
-    def increment_slot(self) -> None:
-        # self._counter_data.increment()
-        # self._emit_signals(self._counter_data.count)
-        pass
-
-    @pyqtSlot()
-    def decrement_slot(self) -> None:
-        # self._counter_data.decrement()
-        # self._emit_signals(self._counter_data.count)
-        pass
-
-    @pyqtSlot()
-    def reset_slot(self) -> None:
-        # self._counter_data.reset()
-        # self._emit_signals(self._counter_data.count)
-        pass
-
-    def _emit_signals(self, count: int) -> None:
-        # self._event_bus.send_counter_signal.emit(count)
-        # self.count_changed_signal.emit(count)
-        pass
-
-    def _register_event_bus_signals(self) -> None:
-        pass
+ 

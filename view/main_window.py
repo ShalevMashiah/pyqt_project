@@ -46,22 +46,7 @@ class MainWindow(QMainWindow):
         self._coordinates_label.setObjectName("CoordinatesLabel")
         self._coordinates_label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(self._coordinates_label)
-        
-        # 3. Title Section
-        # title_label = QLabel("CURRENT COUNT")
-        # title_label.setObjectName("TitleLabel")
-        # title_label.setAlignment(Qt.AlignCenter)
-        # main_layout.addWidget(title_label)
-
-        # 4. Count Display Section
-        # self._count_label.setObjectName("CountLabel")
-        # self._count_label.setAlignment(Qt.AlignCenter)
-        # main_layout.addWidget(self._count_label)
-
-        # Spacer to push buttons to bottom slightly
-
-
-
+    
         # 5. Controls Section (Horizontal Layout)
         button_layout = QHBoxLayout()
         button_layout.setSpacing(15)
@@ -71,7 +56,6 @@ class MainWindow(QMainWindow):
         btn_play.setCursor(Qt.PointingHandCursor)
         btn_play.clicked.connect(self._toggle_video)
         button_layout.addWidget(btn_play)
-
 
         # Clear Points Button
         btn_clear = QPushButton("Clear Points")
