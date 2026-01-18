@@ -1,18 +1,68 @@
+import os
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
+from globals.consts.const_strings import ConstStrings
 from infrastructure.factories.infrastructure_factory import InfrastructureFactory
-from model.data_classes.counter import Counter
+from infrastructure.factories.logger_factory import LoggerFactory
+from model.managers.video_manager import VideoManager
 
 
 class MainWindowViewModel(QObject):
     # Signals to view
-    count_changed_signal = pyqtSignal(int)
+    coordinates_changed_signal = pyqtSignal(int, int)
+    frame_ready_signal = pyqtSignal(object)
 
     def __init__(self):
         super().__init__()
-        self._counter_data = Counter()
+        self._logger = LoggerFactory.get_logger_manager()
         self._event_bus = InfrastructureFactory.create_event_bus()
-        self._register_event_bus_signals()
+        self._current_x = 0
+        self._current_y = 0
+        self._current_click_point = None
+        self._video_manager = None
+        self._is_playing = False
+
+    def load_default_video(self) -> bool:
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        video_path = os.path.join(base_path, "videos", "video1.mp4")
+        return self.load_video(video_path)
+
+    def load_video(self, video_path: str) -> bool:
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Loading video from: {video_path}")
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video exists: {os.path.exists(video_path)}")
+        
+        if os.path.exists(video_path):
+            self._video_manager = VideoManager(video_path)
+            if self._video_manager.load_video():
+                self._is_playing = True
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video loaded successfully! FPS: {self._video_manager.get_fps()}")
+                return True
+            else:
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG, "Failed to open video file")
+                return False
+        else:
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video file not found at: {video_path}")
+            return False
+
+    def get_video_fps(self) -> float:
+        if self._video_manager:
+            return self._video_manager.get_fps()
+        return 30.0
+
+    def update_frame(self, label_width: int, label_height: int):
+        if not self._video_manager:
+            return
+        
+        if self._is_playing:
+            self._video_manager.read_frame()
+        
+        frame_rgb = self._video_manager.get_display_frame(
+            self._current_click_point, label_width, label_height
+        )
+        if frame_rgb is None:
+            return
+        
+        self.frame_ready_signal.emit(frame_rgb)
 
     @pyqtSlot()
     def increment_slot(self) -> None:
