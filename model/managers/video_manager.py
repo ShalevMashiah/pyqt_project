@@ -47,7 +47,27 @@ class VideoManager:
         
         frame = self._current_frame.copy()
         
-        return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)    
+        if click_point:
+            x, y = click_point
+            frame_h, frame_w = frame.shape[:2]
+            scaled_x = int(x * frame_w / label_width)
+            scaled_y = int(y * frame_h / label_height)
+            
+            cv2.circle(frame, (scaled_x, scaled_y), 8, (255, 0, 0), -1)
+            cv2.circle(frame, (scaled_x, scaled_y), 10, (255, 255, 255), 2)
+        
+        return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    
+    
+    def draw_point(self, frame: np.ndarray, x: int, y: int, 
+                   frame_width: int, frame_height: int,
+                   label_width: int, label_height: int) -> np.ndarray:
+        scaled_x = int(x * frame_width / label_width)
+        scaled_y = int(y * frame_height / label_height)
+        
+        cv2.circle(frame, (scaled_x, scaled_y), 8, (255, 0, 0), -1)
+        cv2.circle(frame, (scaled_x, scaled_y), 10, (255, 255, 255), 2)
+        
         return frame
     
     def release(self):
