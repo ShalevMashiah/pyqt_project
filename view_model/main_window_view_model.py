@@ -72,8 +72,15 @@ class MainWindowViewModel(QObject):
         self.coordinates_changed_signal.emit(x, y)
         self._event_bus.send_coordinates_signal.emit(x, y)
 
-        
+    def toggle_playback(self) -> bool:
+        self._is_playing = not self._is_playing
+        state_text = "playing" if self._is_playing else "paused"
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Video {state_text}")
+        return self._is_playing       
     @pyqtSlot()
+
+
+    
     def increment_slot(self) -> None:
         # self._counter_data.increment()
         # self._emit_signals(self._counter_data.count)

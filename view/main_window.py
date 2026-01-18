@@ -66,8 +66,15 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
         button_layout.setSpacing(15)
 
+        # Video Control Button
+        btn_play = QPushButton("Play/Pause")
+        btn_play.setCursor(Qt.PointingHandCursor)
+        btn_play.clicked.connect(self._toggle_video)
+        button_layout.addWidget(btn_play)
 
-        main_layout.addStretch()
+
+        
+        main_layout.addLayout(button_layout)
 
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
@@ -100,7 +107,10 @@ class MainWindow(QMainWindow):
         self._view_model.update_coordinates_slot(x, y)
 
     def _update_coordinates_slot(self, x: int, y: int) -> None:
-        self._coordinates_label.setText(f"Click on video: X={x}, Y={y}")       
+        self._coordinates_label.setText(f"Click on video: X={x}, Y={y}")    
 
+
+    def _toggle_video(self):
+        is_playing = self._view_model.toggle_playback()
 
 
