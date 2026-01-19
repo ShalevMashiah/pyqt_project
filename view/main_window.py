@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(video_title)
 
         # Video display
+        self._video_label.setObjectName("VideoLabel")
         self._video_label.setMinimumSize(640, 360)
         self._video_label.setStyleSheet("background-color: black;")
         self._video_label.clicked.connect(self._on_video_clicked)

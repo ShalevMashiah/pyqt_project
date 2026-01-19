@@ -14,6 +14,11 @@ class ConstStyles:
                 font-weight: bold;
                 color: #333;
             }
+            QLabel#VideoLabel {
+                border: 3px solid #2563eb;
+                border-radius: 8px;
+                background-color: #000000;
+            }
             QLabel#CountLabel[valueStatus="positive"] {
                 color: #10b981; /* Green */
             }
@@ -59,5 +64,6 @@ class ConstStyles:
                 color: white;
                 border: none;
             }
+            
             QPushButton#DecButton:hover { background-color: #dc2626; }
         """
