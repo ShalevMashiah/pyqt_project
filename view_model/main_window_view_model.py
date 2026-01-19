@@ -5,6 +5,7 @@ from globals.consts.const_strings import ConstStrings
 from infrastructure.factories.infrastructure_factory import InfrastructureFactory
 from infrastructure.factories.logger_factory import LoggerFactory
 from model.managers.video_manager import VideoManager
+from model.data_classes.point import Point
 
 
 class MainWindowViewModel(QObject):
@@ -69,7 +70,7 @@ class MainWindowViewModel(QObject):
     def update_coordinates_slot(self, x: int, y: int) -> None:
         self._current_x = x
         self._current_y = y
-        self._current_click_point = (x, y)
+        self._current_click_point = Point(x, y)
         self.coordinates_changed_signal.emit(x, y)
         self._event_bus.send_coordinates_signal.emit(x, y)
 

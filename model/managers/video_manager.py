@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
+from model.data_classes.point import Point
 
 
 class VideoManager:
@@ -40,7 +41,7 @@ class VideoManager:
             return cv2.cvtColor(self._current_frame, cv2.COLOR_BGR2RGB)
         return None
     
-    def get_display_frame(self, click_point: Optional[Tuple[int, int]], 
+    def get_display_frame(self, click_point: Optional[Union[Point, Tuple[int, int]]], 
                           label_width: int, label_height: int) -> Optional[np.ndarray]:
         if self._current_frame is None:
             return None
@@ -48,7 +49,12 @@ class VideoManager:
         frame = self._current_frame.copy()
         
         if click_point:
-            x, y = click_point
+            # Handle both Point dataclass and tuple
+            if isinstance(click_point, Point):
+                x, y = click_point.x, click_point.y
+            else:
+                x, y = click_point
+            
             frame_h, frame_w = frame.shape[:2]
             scaled_x = int(x * frame_w / label_width)
             scaled_y = int(y * frame_h / label_height)
